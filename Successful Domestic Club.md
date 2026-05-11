@@ -1,0 +1,94 @@
+# REST API: Most Successful Domestic Club
+
+## Problem Statement
+
+A local sports publication aims to highlight the most successful domestic football clubs beyond just their titles. Use HTTP GET requests to access a football club database via the URL: \
+`https://jsonmock.hackerrank.com/api/football_teams?league={league_name}`
+
+*(replace {league_name} with the league name)*
+
+The database details various clubs' statistics, and the query result is paginated. You can access additional pages by appending `&page={num}` to the query string *(replace {num} with page number)*.
+
+---
+
+## The Query Response Includes
+
+- **page** — the current page
+- **per_page** — maximum results per page
+- **total** — total number of records
+- **total_pages** — total number of pages
+- **data** — an array of JSON objects containing club information
+
+---
+
+## Each Object in the Data Field Includes
+
+- **name** — the club's name
+- **league** — the league in which the club plays
+- **total_silverware_count** — count of silverware won
+- **number_of_champions_league_won** — number of Champions League titles won
+- **league_top_three_finishes** — count of top-three finishes
+- other details not relevant to this question
+
+---
+
+## Task
+
+Given a weight multiplier, use this API to fetch data and compute a **"success point"** for each club based on this formula:\
+`success_points = total_silverware_count - number_of_champions_league_won + (weight × league_top_three_finishes)`
+
+Return the **name of the club** with the highest success points.
+
+---
+
+## Example
+
+For Arsenal FC with data:
+
+```json
+{
+  "name": "Arsenal FC",
+  "total_silverware_count": 30,
+  "number_of_champions_league_won": 0,
+  "league_top_three_finishes": 18
+}
+```
+
+Given a weight of **0.50**, the success points are: \
+30 - 0 + (0.50 × 18) = 39 success points
+
+---
+
+## Function Description
+
+Complete the function `mostSuccessfulDomesticClub` with the following parameters:
+
+| Parameter | Type   | Description                                      |
+|-----------|--------|--------------------------------------------------|
+| `league`  | STRING | The league name                                  |
+| `weight`  | DOUBLE | The weight multiplier for top-three league finishes |
+
+**Returns:** `STRING` — the name of the most successful domestic club
+
+---
+
+## Sample Case
+
+### Input
+> English Premier League (EPL) \
+> 0.37
+
+### Output
+> Manchester United FC
+### Explanation
+
+Within the English Premier League (EPL):
+
+| Club | Formula | Score |
+|------|---------|-------|
+| Manchester United FC | 66 - 3 + (0.37 × 27) | 72.99 ✅ |
+| Liverpool | 48 - 6 + (0.37 × 27) | 51.99 |
+
+Manchester United FC has the highest score of **72.99** and is returned as the answer.
+
+> Note: Data is found on page 2 of the query result.
