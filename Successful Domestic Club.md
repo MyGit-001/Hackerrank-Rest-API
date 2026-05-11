@@ -92,3 +92,63 @@ Within the English Premier League (EPL):
 Manchester United FC has the highest score of **72.99** and is returned as the answer.
 
 > Note: Data is found on page 2 of the query result.
+
+
+## Editor
+```Java
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.regex.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+import java.net.*;
+import org.json.simple.*;
+import org.json.simple.parser.*;
+import java.net.http.*;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import com.google.gson.*;
+
+class Result {
+
+    /*
+     * Complete the 'mostSuccessfulDomesticClub' function below.
+     *
+     * The function is expected to return a STRING.
+     * The function accepts following parameters:
+     *  1. STRING league
+     *  2. DOUBLE weight
+     * API URL: https://jsonmock.hackerrank.com/api/football_teams?league=<league>
+     */
+
+    public static String mostSuccessfulDomesticClub(String league, double weight) {
+
+    }
+
+}
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        String league = bufferedReader.readLine();
+
+        double weight = Double.parseDouble(bufferedReader.readLine().trim());
+
+        String result = Result.mostSuccessfulDomesticClub(league, weight);
+
+        bufferedWriter.write(result);
+        bufferedWriter.newLine();
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
+```
