@@ -93,8 +93,44 @@ Manchester United FC has the highest score of **72.99** and is returned as the a
 
 > Note: Data is found on page 2 of the query result.
 
+---
 
-## Editor
+## Code Editor
+## Key Concepts Tested
+
+This question demands us to do:
+### Core Skills
+
+```
+FETCH      → Hit the API using HttpClient
+    +
+PARSE      → Extract fields from JSON response
+    +
+PAGINATE   → Loop through all pages to get all clubs
+```
+
+---
+### On Top of That
+```
+LOGIC      → Apply the formula and track highest score
+```
+
+Which is the **easiest part** of the whole question.
+
+---
+
+### Marks Breakdown
+
+> For every HackerRank REST API question:
+
+```
+90% of the marks → fetch + parse + paginate (boilerplate)
+10% of the marks → actual logic/formula
+```
+
+Once the boilerplate becomes muscle memory, these questions become very easy.
+The logic itself is always straightforward. 🎯
+
 ```Java
 import java.io.*;
 import java.math.*;
