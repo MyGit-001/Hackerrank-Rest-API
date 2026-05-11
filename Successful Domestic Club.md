@@ -164,7 +164,7 @@ class Result {
      */
 
     public static String mostSuccessfulDomesticClub(String league, double weight) {
-
+      
     }
 
 }
