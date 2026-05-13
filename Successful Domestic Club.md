@@ -167,6 +167,14 @@ class Result {
       
     }
 
+    public static String fetch(String url) throws Exception {
+      HttpClient client = HttpClient.newHttpClient();
+      HttpRequest req = HttpRequest.newBuilder()
+            .uri(URI.create(url))
+            .build();
+      return client.send(req, HttpResponse.BodyHandlers.ofString()).body();
+}
+
 }
 
 public class Solution {
