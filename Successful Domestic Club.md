@@ -198,7 +198,7 @@ class Result {
 
     } catch (Exception e) {
         throw new RuntimeException(e);
-    }
+      }
     }
 
     public static String fetch(String url) throws Exception {
