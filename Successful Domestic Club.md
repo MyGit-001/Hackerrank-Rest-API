@@ -164,7 +164,41 @@ class Result {
      */
 
     public static String mostSuccessfulDomesticClub(String league, double weight) {
-      
+      try {
+        String encodedLeague = league.replace(" ", "%20");
+        String baseUrl = "https://jsonmock.hackerrank.com/api/football_teams?league=" + encodedLeague;
+        String url = baseUrl + "&page=1";
+
+        JSONParser parser = new JSONParser();
+        JSONObject obj1 = (JSONObject) parser.parse(fetch(url));
+        Long totalPages = (Long) obj1.get("total_pages");
+
+        String bestClub = "";
+        Double bestScore = Double.NEGATIVE_INFINITY;
+
+        for (int page = 1; page <= totalPages; page++) {
+            String pageUrl = baseUrl + "&page=" + page;
+            JSONObject obj = (JSONObject) parser.parse(fetch(pageUrl));
+            JSONArray arr = (JSONArray) obj.get("data");
+
+            for (JSONObject item : arr) {
+                Long totalSilverware = (Long) item.get("total_silverware_count");
+                Long championsLeagueWon = (Long) item.get("number_of_champions_league_won");
+                Long topThreeFinishes = (Long) item.get("league_top_three_finishes");
+
+                Double highestScore = totalSilverware - championsLeagueWon + (weight * topThreeFinishes);
+
+                if (bestScore < highestScore) {
+                    bestScore = highestScore;
+                    bestClub = (String) item.get("name");
+                }
+            }
+        }
+        return bestClub;
+
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
     }
 
     public static String fetch(String url) throws Exception {
