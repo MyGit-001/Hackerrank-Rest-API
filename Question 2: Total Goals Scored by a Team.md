@@ -19,7 +19,48 @@ class Result {
      */
 
     public static int getTotalGoals(String team, int year) {
-   
+    try{
+        String url1 = "https://jsonmock.hackerrank.com/api/football_matches?year=<year>&team1=<team>";
+        String url2 = "https://jsonmock.hackerrank.com/api/football_matches?year=<year>&team2=<team>";
+      
+        String team1Url = url1.replace("<year>",String.valueOf(year)).replace("<team>",team);
+        String team2Url = url2.replace("<year>",String.valueOf(year)).replace("<team>",team);
+      
+        JSONParser parser = new JSONParser();
+
+      
+        Long totalGoals = 0;
+      
+        JSONObject obj1 = (JSONObject) parser.parse(fetch(team1Url+"&page=1"));
+        Long team1pages = (Long) obj1.get("total_pages");
+    
+      
+        for(int page = 1; page<=team1pages ; page++){
+          JSONObject team1Obj = (JSONObject) parser.parse(fetch(team1Url+"&page="+page));
+          JSONArray team1arr = (JSONArray) team1Obj.get("data");
+        
+          for(JSONObject item : team1arr){
+            totalGoals += Long.parseLong((String)item.get("team1goals"));
+          }
+        }
+      
+        JSONObject obj2 = (JSONObject) parser.parse(fetch(team2Url+"&page=1"));
+        Long team2pages = (Long)obj2.get("total_pages");
+      
+        for(int page = 1; page<=team2pages ; page++){
+          JSONObject team2Obj = (JSONObject) parser.parse(fetch(team2Url+"&page="+page));
+          JSONArray team2arr = (JSONArray) team2Obj.get("data");
+        
+          for(JSONObject item : team2arr){
+            totalGoals += Long.parseLong((String)item.get("team2goals"));
+          }
+        }
+
+      return totalGoals.intValue(); 
+      
+      }catch(Exception e){
+        throw new RuntimeException(e);
+      }
     }
 
     public static String fetch(String url) throws Exception {
