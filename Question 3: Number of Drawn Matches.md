@@ -31,10 +31,7 @@ class Result {
             totalDraws += (Long) obj.get("total");
         }
         return totalDraws;
-    }catch(Exception e){
-        throw new RuntimeException(e);
-    }
-        
+    }catch(Exception e) { throw new RuntimeException(e);}
     }
 
     public static String fetch(String url) throws Exception {
