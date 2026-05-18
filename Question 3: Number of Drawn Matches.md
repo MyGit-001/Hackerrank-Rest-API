@@ -20,25 +20,24 @@ class Result {
         // Write your code here
     try{
         String baseUrl = "https://jsonmock.hackerrank.com/api/football_matches?year=<year>&team1goals=<goals>&team2goals=<goals>&page=1";
-        String encodedUrl = baseUrl.replace("<year>",year);
+        String encodedUrl = baseUrl.replace("<year>",String.valueOf(year));
         
         JSONParser parser = new JSONParser();
         Long totalDraws = 0;
         
-        for(int i=0 ; i<10 ; i++){
-            String newUrl = encodedUrl.replace("<goals>",i);
+        for(int i=0 ; i<=10 ; i++){
+            String newUrl = encodedUrl.replace("<goals>",String.valueOf(i));
             JSONObject obj = (JSONObject) parser.parse(fetch(newUrl));
             totalDraws += (Long) obj.get("total");
         }
-        return totalDraws;
+        return totalDraws.intValues();
     }catch(Exception e) { throw new RuntimeException(e);}
     }
 
     public static String fetch(String url) throws Exception {
-        HttpClient client = HttpClient.newClient();
+        HttpClient client = HttpClient.newHttpClient();
         HttpRequest req = HttpRequest.newBuilder().uri(URI.create(url)).build();
-        String res = client.send(client , HttpResponse.bodyHandler.ofStrings()).body();
-        
+        String res = client.send(req , HttpResponse.bodyHandler.ofStrings()).body();
         return res;
     }
 }
