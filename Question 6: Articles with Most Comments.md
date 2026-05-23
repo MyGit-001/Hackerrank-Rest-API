@@ -35,15 +35,12 @@ class Result {
                 Long num_comments = (Long) item.get("num_comments");
                 
                 if(title1 == null || title1.isEmpty()){
-                    if(title2 == null || title2.isEmpty()){
+                    if(title2 == null || title2.isEmpty())
                         continue;
-                     }    
-                     else{
+                     else
                          finalTitle = title2;
-                     }
-                }else{
+                }else
                          finalTitle = title1;
-                }
                 
                 if(num_comments == null)
                     num_comments = 0L;
