@@ -1,7 +1,4 @@
 ```Java
-// Online Java Compiler
-// Use this editor to write, compile and run your Java code online
-
 import java.io.*;
 import java.util.*;
 import java.net.*;
@@ -18,50 +15,56 @@ class Result {
      *  1. INTEGER n
      * API URL: https://jsonmock.hackerrank.com/api/articles?page=<page>
      */
-     
-class Post {
-    String title;
-    long numOfComments;
-
-    public Post(String title, long numOfComments) {
-        this.title = title;
-        this.numOfComments = numOfComments;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public long getNumOfComments() {
-        return numOfComments;
-    }
-}
 
     public static List<String> topArticles(int n) {
-        // Write your code here
+    try{
         String url = "https://jsonmock.hackerrank.com/api/articles?page=1";
         JSONParser parser = new JSONParser();
         JSONObject obj = (JSONObject) parser.parse(fetch(url));
-        long total_pages = obj.get("total_pages");
-        for(long page =1; page<=total_pages; page++){
-            String newUrl = "https://jsonmock.hackerrank.com/api/articles?page="+page;
+        long total_pages = (long) obj.get("total_pages");
+        
+        List<Object[]> articles = new ArrayList<>();
+        for(long page = 1 ; page <=total_pages; page++ ){
+            String newUrl = "https://jsonmock.hackerrank.com/api/articles?page=" + page;
             JSONObject obj2 = (JSONObject) parser.parse(fetch(newUrl));
             JSONArray arr = (JSONArray) obj2.get("data");
             for(JSONObject item : arr){
-                List<Post> post = new ArrayList<>();
-                if(item.get("title")){
-                    map.add(new post(item.get("story_title"),item.get("num_comments")));
-                else
-                    map.add(new post(item.get("title"),item.get("num_comments")));
+                String title1 = (String) item.get("title");
+                String title2 = (String) item.get("story_title");
+                String finalTitle = "";
+                Long num_comments = (Long) item.get("num_comments");
+                
+                if(title1 == null || title1.isEmpty()){
+                    if(title2 == null || title2.isEmpty()){
+                        continue;
+                     }    
+                     else{
+                         finalTitle = title2;
+                     }
+                }else{
+                         finalTitle = title1;
                 }
-            }
-            
+                
+                if(num_comments == null)
+                    num_comments = 0L;
+                    
+                articles.add(new Object[]{finalTitle , num_comments});
+            } 
         }
+        articles.sort((a,b) -> Long.compare((Long) b[1],(Long) a[1]));
+        
+        List<String> result = new ArrayList<>();
+        for( int i = 0 ; i< n && i<articles.size(); i++){
+            result.add((String) articles.get(i)[0]);
+        }
+        return result;
+    }catch(Exception e){
+        throw new RuntimeException(e);
+    }
     }
 
     public static String fetch(String url) throws Exception {
-        // Write your code here
-        HttpClient client = HttpClent.newHttpClient();
+        HttpClient client = HttpClient.newHttpClient();
         HttpRequest req = HttpRequest
         .newBuilders()
         .uri(URI.create(url))
